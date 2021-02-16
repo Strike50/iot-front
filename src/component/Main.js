@@ -1,93 +1,110 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 
 export const Main = () => {
   const maxAngle = 90;
   const maxPower = 40;
-  const [angle, setAngle] = useState(0);
-  const [power, setPower] = useState(0);
+  const angle = useRef(0);
+  const power = useRef(0);
   const [leftInterval, setLeftInterval] = useState(undefined);
   const [forwardInterval, setForwardInterval] = useState(undefined);
   const [rightInterval, setRightInterval] = useState(undefined);
 
-  useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown, false);
-    document.addEventListener("keyup", handleKeyUp, false);
+  const incrementAngle = type => {
+    const newAngle = angle.current + 10;
+    if (newAngle <= maxAngle) angle.current = newAngle;
+    if (type==='left') {
+      sendLeft();
+    } else {
+      sendRight();
+    }
+  };
 
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown, false);
-      document.removeEventListener("keyup", handleKeyUp, false);
-    };
-  }, []);
+  const incrementPower = () => {
+    const newPower = power.current + 5;
+    if (newPower <= maxPower) power.current = newPower;
+    sendForward();
+  }
 
-  const handleKeyDown = event => {
-    // console.log(event.key)
-    if (event.key === 'q' || event.key === 'Q' || event.key === 'ArrowLeft') {
+  const cbIncrementAngle = useCallback(incrementAngle, [angle]);
+  const cbIncrementPower = useCallback(incrementPower, [power]);
+
+  const handleKeyDown = (event) => {
+    if (event.key === "q" || event.key === "Q" || event.key === "ArrowLeft") {
       if (!leftInterval) {
-        prepareLeft();
-        const intervalId = setInterval(() => prepareLeft, 500);
-        console.log('valeur', intervalId);
-        setLeftInterval(intervalId);
-        console.log(leftInterval)
+        cbIncrementAngle('left');
+        setLeftInterval(setInterval(() => cbIncrementAngle('left'), 500));
       }
     }
     if (event.key === 'z' || event.key === 'Z' || event.key === 'ArrowUp') {
-      console.log('forward')
-    }
-    if (event.key === 'd' || event.key === 'D' || event.key === 'ArrowRight') {
-      console.log('right')
-    }
-    if (event.key === 's' || event.key === 'S' || event.key === 'ArrowDown') {
-      console.log('stop')
-      sendForward(0);
-    }
-  };
-
-  const handleKeyUp = event => {
-    if (event.key === 'q' || event.key === 'Q' || event.key === 'ArrowLeft') {
-      // console.log(leftInterval)
-      console.log(leftInterval)
-      if (leftInterval && typeof leftInterval === 'number') {
-        // console.log(leftInterval)
-        console.log('finito')
-        clearInterval(leftInterval);
-        setLeftInterval(undefined);
-        setAngle(0);
+      if (!forwardInterval) {
+        cbIncrementPower();
+        setForwardInterval(setInterval(cbIncrementPower, 500));
       }
     }
-  }
-
-  const prepareLeft = () => {
-    const newAngle = angle + 10;
-    console.log(newAngle, 'new')
-    if (newAngle <= maxAngle) {
-      setAngle(newAngle);
-      sendLeft(newAngle);
+    if (event.key === 'd' || event.key === 'D' || event.key === 'ArrowRight') {
+      if (!rightInterval) {
+        cbIncrementAngle('right');
+        setRightInterval(setInterval(() => cbIncrementAngle('right'), 500));
+      }
     }
-  }
+    if (event.key === 's' || event.key === 'S' || event.key === 'ArrowDown') {
+      power.current = 0;
+      sendForward();
+    }
+  };
 
-  const prepareForward = () => {
+  const handleKeyUp = (event) => {
+    if (event.key === "q" || event.key === "Q" || event.key === "ArrowLeft") {
+      if (leftInterval && typeof leftInterval === "number") {
+        clearInterval(leftInterval);
+        setLeftInterval(undefined);
+        angle.current = 0;
+      }
+    }
+    if (event.key === "z" || event.key === "Z" || event.key === "ArrowUp") {
+      if (forwardInterval && typeof forwardInterval === "number") {
+        clearInterval(forwardInterval);
+        setForwardInterval(undefined);
+        power.current = 0;
+      }
+    }
+    if (event.key === "d" || event.key === "D" || event.key === "ArrowRight") {
+      if (rightInterval && typeof rightInterval === "number") {
+        clearInterval(rightInterval);
+        setRightInterval(undefined);
+        angle.current = 0;
+      }
+    }
+  };
 
-  }
 
-  const prepareRight = () => {
+  const cbHandleKeyDown = useCallback(handleKeyDown, [cbIncrementAngle, cbIncrementPower, leftInterval, forwardInterval, rightInterval]);
+  const cbHandleKeyUp = useCallback(handleKeyUp, [leftInterval, forwardInterval, rightInterval]);
 
-  }
+  useEffect(() => {
+    document.addEventListener("keydown", cbHandleKeyDown, false);
+    document.addEventListener("keyup", cbHandleKeyUp, false);
 
-  const sendLeft = angleParam => {
-    console.log(angleParam)
-    fetch(`/left?angle=${angleParam}`)
+    return () => {
+      document.removeEventListener("keydown", cbHandleKeyDown, false);
+      document.removeEventListener("keyup", cbHandleKeyUp, false);
+    };
+  }, [cbHandleKeyDown, cbHandleKeyUp]);
+
+  const sendLeft = () => {
+    fetch(`/left?angle=${angle.current}`)
       .then(() => {
       })
   };
 
-  const sendForward = powerParam => {
-    fetch(`/forward?power=${powerParam}`)
+  const sendForward = () => {
+    fetch(`/forward?power=${power.current}`)
       .then(() => {
       })
   };
 
-  const sendRight = angleParam => {
-    fetch(`/right?angle=${angleParam}`)
+  const sendRight = () => {
+    fetch(`/right?angle=${angle.current}`)
       .then(() => {
       })
   }
@@ -96,7 +113,6 @@ export const Main = () => {
     <div>
       Utilisez les touches Q, S, Z et D pour vous déplacer.<br/>
       Ou les flèches directionnelles.<br/>
-      {angle}
     </div>
   )
 
