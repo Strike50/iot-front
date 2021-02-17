@@ -30,3 +30,5 @@ https://www.gotronic.fr/art-tringle-filetee-pour-servos-tfm2x500-11975.htm
 ![Alt text](/img/schema-archi.png?raw=true "Title")
 
 # Vidéo démonstration
+
+[Vidéo démonstration bato connecté](https://www.youtube.com/watch?v=VwW8vSyG7_I)
