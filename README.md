@@ -1,70 +1,32 @@
-# Getting Started with Create React App
+Projet IOT de Super Bato Connecté
+par CASTEL Rémi, HOULGATTE--BUSTAMANTE Louka, LAPLAUD Ronan et LEROY Alexis
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Concept
+Réaliser un sonar immergé sur un bateau radio commandé. Le sonar permettra de réaliser un sondage sous la surface de 180° à 360°.
+Le bateau sera dirigé par une manette, et les données du sonar seront directement disponibles sur le PC.
+Le bateau sera connecté en wifi, via le partage de connexion d’un téléphone portable.
+Ce produit est à destination des pécheurs, pour leur permettre de cibler les poissons plus facilement.
 
-## Available Scripts
+![Alt text](/img/bato-final.png?raw=true "Title")
 
-In the project directory, you can run:
+# Matériel utilisé
+Capteur étanche à ultrason SEN0208 :
+https://www.gotronic.fr/art-capteur-etanche-a-ultrasons-sen0208-25729.htmhttps://www.gotronic.fr/art-capteur-etanche-a-ultrasons-sen0208-25729.htm 
 
-### `npm start`
+Hélices:
+https://www.gotronic.fr/art-jeu-de-4-helices-c6086-11870.htm 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Module Bluetooth
+https://www.gotronic.fr/art-module-bluetooth-hc05-26097.htm 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Arduino wifi
+https://www.gotronic.fr/art-carte-arduino-uno-wifi-v2-abx00021-r-29092.htm 
 
-### `npm test`
+Tige extension moteur
+https://www.gotronic.fr/art-tringle-filetee-pour-servos-tfm2x500-11975.htm 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Schéma d’architecture de la solution
 
-### `npm run build`
+![Alt text](/img/schema-archi.png?raw=true "Title")
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Vidéo démo
